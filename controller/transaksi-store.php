@@ -19,19 +19,17 @@ if (isset($_POST['simpan'])) {
 
     foreach ($_POST['id_barang'] as $key => $id_barang) {
         $jumlah = $_POST['jumlah'][$key];
+        $harga = $_POST['harga'][$key];
+        $sub_total = $_POST['sub_total'][$key];
+
 
         //ambil stock dan harga barng
-        $barang = mysqli_query($koneksi, "SELECT harga, qty FROM barang WHERE id='$id_barang'");
-        $barangData = mysqli_fetch_assoc($barang);
-        $harga = $barangData['harga'];
-        $qty = $barangData['qty'];
 
-        $total_harga_detail = $jumlah * $harga;
-        $detailPenjualan = mysqli_query($koneksi, "INSERT INTO detail_penjualan (id_penjualan,id_barang,jumlah,qty,harga,total_harga,nominal_bayar,kembalian) 
-        VALUES ('$id_penjualan','$id_barang','$jumlah','$qty','$harga','$total_harga','$nominal_bayar','$kembalian')");
+        $detailPenjualan = mysqli_query($koneksi, "INSERT INTO detail_penjualan (sub_total,id_penjualan,id_barang,jumlah,harga,total_harga,nominal_bayar,kembalian) 
+        VALUES ('$sub_total','$id_penjualan','$id_barang','$jumlah','$harga','$total_harga','$nominal_bayar','$kembalian')");
 
         $updateQty = mysqli_query($koneksi, "UPDATE barang SET qty=qty - $jumlah WHERE id=$id_barang");
     }
-    header("location: ../kasir.php");                           
+    header("location: ../print.php?id=" . $id_penjualan);
     exit();
 }

@@ -16,6 +16,7 @@ if (isset($_POST['login'])) {
         if ($row['email'] == $email && $row['password'] == $password) {
             $_SESSION['EMAIL'] = $row['email'];
             $_SESSION['NAMA'] = $row['nama_lengkap'];
+            $_SESSION['NAMALENGKAP'] = $row['nama_lengkap'];
             header('location: kasir.php');
             exit();
         }
